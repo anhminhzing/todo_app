@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/todo_app/data.dart';
 import 'package:flutter_app/todo_app/page_screen.dart';
 
 class CardItem extends StatefulWidget {
   final String title;
   final String description;
-  final bool isDone;
+  final VoidCallback onTap;
 
-  CardItem({Key key, this.title, this.description, this.isDone,})
+  CardItem({Key key, this.title, this.description,this.onTap})
       : super(key: key);
 
   @override
@@ -14,23 +15,17 @@ class CardItem extends StatefulWidget {
 }
 
 class _CardItemState extends State<CardItem> {
-  bool isDone;
 
   @override
   void initState() {
-    isDone = widget.isDone;
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => PageScreen()),
-        );
-      },
+      onTap: widget.onTap,
       child:  Container(
           margin: const EdgeInsets.only(top: 20),
           padding: const EdgeInsets.all(10),
