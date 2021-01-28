@@ -3,9 +3,11 @@ class Task{
   bool isDone;
   Task({this.task, this.isDone});
 
-  Task.fromJson(Map<String, dynamic> json){
-    task = json['task'];
-    isDone = json['isDone'];
+  factory Task.fromJson(Map<String, dynamic> json){
+    return Task(
+      task: json['task'] as String,
+      isDone: json['isDone'] as bool,
+    );
   }
 }
 
@@ -15,12 +17,14 @@ class ToDoItem {
   List<Task> listTask;
   ToDoItem({this.title, this.description, this.listTask});
 
-  ToDoItem.fromJson(Map<String, dynamic> json){
-    title = json['title'];
-    description = json['description'];
-    listTask = (json['listTask'] as List).map((e){
-      Task.fromJson(e as Map<String, dynamic>);
-    }).toList();
+  factory ToDoItem.fromJson(Map<String, dynamic> json){
+    return ToDoItem(
+      title: json['title'] as String,
+      description: json['description'] as String,
+      listTask:  (json['listTask'] as List).map((e) {
+        return Task.fromJson(e as Map<String, dynamic>);
+      }).toList()
+    );
   }
 }
 
@@ -28,10 +32,12 @@ class ToDoList {
   List<ToDoItem> listItems;
 
   ToDoList({this.listItems});
-  ToDoList.fromJson(Map<String, dynamic> json){
-    listItems = (json['listItems'] as List ).map((e){
-      ToDoItem.fromJson(e as Map<String, dynamic>);
-    }).toList();
+  factory ToDoList.fromJson(Map<String, dynamic> json){
+    return ToDoList(
+      listItems: (json['listItems'] as List).map((e) {
+        return ToDoItem.fromJson(e as Map<String, dynamic>);
+      }).toList()
+    );
   }
 }
 

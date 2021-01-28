@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/bloc/listToDo_bloc.dart';
 import 'package:flutter_app/todo_app/card_item.dart';
 import 'package:flutter_app/todo_app/data.dart';
 
@@ -8,10 +9,10 @@ class ToDoApp extends StatefulWidget {
 }
 
 class _ToDoAppState extends State<ToDoApp> {
-
+  ToDoBloc blocTodo;
   @override
   void initState() {
-    // TODO: implement initState
+    blocTodo = ToDoBloc()..init();
     super.initState();
   }
 
