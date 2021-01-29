@@ -45,83 +45,144 @@ class _PageScreenState extends State<PageScreen> {
           body: Stack(
             fit: StackFit.expand,
             children: [
+              Container(
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                color: Color(0xFF242A37),
+              ),
               SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            ToDoItem newItem = ToDoItem(
-                              title: titleController.text.trim() == '' ? '[new title]' : titleController.text,
-                              description: desController.text.trim() == '' ? '[new title]' : desController.text,
-                              listTask: listTask
-                            );
-                            widget.bloc.addToDo(newItem);
-                            Navigator.pop(context);
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.all(10),
-                            child: Center(
-                              child: Icon(
-                                Icons.arrow_back,
-                                size: 30,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: TextField(
-                            controller: titleController,
-                            maxLines: 1,
-                            decoration: InputDecoration(
-                              hintText: 'New title for new task',
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 30),
-                    Container(
-                      child: TextField(
-                        controller: desController,
-                        maxLines: 5,
-                        decoration: InputDecoration(
-                          hintText: 'New description for new task',
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide.none,
+                child: Container(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          ToDoItem newItem = ToDoItem(
+                              title: titleController.text.trim() == ''
+                                  ? '[empty title]'
+                                  : titleController.text,
+                              description: desController.text.trim() == ''
+                                  ? '[empty description]'
+                                  : desController.text,
+                              listTask: listTask);
+                          int index = MockData.mockList.indexOf(widget.item);
+                          MockData.mockList[index] = newItem;
+                          Navigator.pop(context);
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          child: Icon(
+                            Icons.arrow_back,
+                            size: 30,
+                            color: Colors.white,
                           ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 30,
-                    ),
-                    Column(
-                      children: List.generate(listTask.length, (index) {
-                        return CheckboxListTile(
-                          title: Text(listTask[index].task),
-                          value: listTask[index].isDone,
-                          onChanged: (newValue) {
-                            setState(() {
-                              listTask[index].isDone = !listTask[index].isDone;
-                            });
-                          },
-                          controlAffinity: ListTileControlAffinity
-                              .leading, //  <-- leading Checkbox
-                        );
-                      }).toList(),
-                    )
-                  ],
+                      TextField(
+                        controller: titleController,
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.white,
+                        ),
+                        maxLines: 1,
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.all(10),
+                          hintText: 'New title for new task',
+                          hintStyle: TextStyle(
+                            fontSize: 20,
+                            color: Colors.white.withOpacity(0.2),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            borderSide: const BorderSide(
+                                color: Colors.white, width: 1.0),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            borderSide: const BorderSide(
+                                color: Colors.white, width: 1.0),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      Container(
+                        child: TextField(
+                          controller: desController,
+                          maxLines: 5,
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Colors.white,
+                          ),
+                          decoration: InputDecoration(
+                            contentPadding: const EdgeInsets.all(10),
+                            hintText: 'New description for new task',
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
+                              borderSide: const BorderSide(
+                                  color: Colors.white, width: 1.0),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
+                              borderSide: const BorderSide(
+                                  color: Colors.white, width: 1.0),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      Column(
+                        children: List.generate(listTask.length, (index) {
+                          return Container(
+                            margin: const EdgeInsets.only(bottom: 20),
+                            decoration: BoxDecoration(
+                              color: Color(0xFF242A37),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.2),
+                                  spreadRadius: 5,
+                                  blurRadius: 7,
+                                  offset: Offset(
+                                      0, 1), // changes position of shadow
+                                ),
+                              ],
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Checkbox(
+                                  activeColor: Colors.green,
+                                  checkColor: Colors.white,
+                                  value: listTask[index].isDone,
+                                  onChanged: (newValue) {
+                                    setState(() {
+                                      listTask[index].isDone =
+                                          !listTask[index].isDone;
+                                    });
+                                  },
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    listTask[index].task,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          );
+                        }).toList(),
+                      )
+                    ],
+                  ),
                 ),
               ),
               Positioned(
@@ -130,16 +191,38 @@ class _PageScreenState extends State<PageScreen> {
                 child: Container(
                   width: MediaQuery.of(context).size.width,
                   height: 50,
-                  color: Colors.blue,
+                  decoration: BoxDecoration(
+                    color: Color(0xFF242A37),
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      topRight: Radius.circular(10),
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.2),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset: Offset(0, 1), // changes position of shadow
+                      ),
+                    ],
+                  ),
                   child: Row(
                     children: [
-                      Checkbox(value: true, onChanged: (value) {}),
+                      Checkbox(value: false, onChanged: (value) {}),
                       Expanded(
                         child: TextField(
                           controller: taskController,
                           maxLines: 1,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                          ),
                           decoration: InputDecoration(
                             hintText: 'New task',
+                            hintStyle: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                            ),
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide.none,
                             ),
@@ -147,15 +230,17 @@ class _PageScreenState extends State<PageScreen> {
                               borderSide: BorderSide.none,
                             ),
                           ),
-                          onEditingComplete: (){
-
+                          onEditingComplete: () {
                             setState(() {
                               FocusScope.of(context).unfocus();
                               var newTask = Task(
                                 task: taskController.text,
                                 isDone: false,
                               );
-                              listTask.add(newTask);
+                              taskController.text.trim() != ''
+                                  ? listTask.add(newTask)
+                                  : null;
+                              taskController.clear();
                             });
                           },
                         ),

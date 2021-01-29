@@ -41,6 +41,12 @@ class ToDoItem {
         && other.description == description
         && other.listTask == listTask;
   }
+
+  @override
+  String toString() {
+    print('$title');
+    return super.toString();
+  }
 }
 
 class ToDoList {
@@ -54,6 +60,11 @@ class ToDoList {
       }).toList()
     );
   }
+
+}
+
+class MockData{
+  static List<ToDoItem> mockList = [];
 }
 
 

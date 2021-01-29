@@ -28,49 +28,12 @@ class ToDoBloc {
     listItemController.sink.add(ResponseState.done);
   }
 
-  void fixData(int index, String title, String description)  {
+  void setList(){
     listItemController.sink.add(ResponseState.loading);
-    ToDoItem newItem = ToDoItem(
-      title: title,
-      description: description,
-      listTask: []
-    );
-    listToDo[index] = newItem;
     listItemController.sink.add(ResponseState.done);
-  }
-
-  void addTask(ToDoItem item, Task newTask){
-    listItemController.sink.add(ResponseState.loading);
-    listToDo.forEach((element) {
-      if(item == element){
-        element.listTask.add(newTask);
-      }
-    });
-    listItemController.sink.add(ResponseState.done);
-  }
-
-  void addToDo(ToDoItem newItem){
-    listItemController.sink.add(ResponseState.loading);
-    listToDo.add(newItem);
-    listItemController.sink.add(ResponseState.done);
-  }
-
-  void changeStateDone(ToDoItem item, bool state, Task taskItem){
-    listItemController.sink.add(ResponseState.loading);
-    listToDo.forEach((element) {
-      if(item == element){
-        element.listTask.forEach((elementTask) {
-          if (elementTask == taskItem){
-            elementTask.isDone = state;
-          }
-        });
-      }
-    });
-    listItemController.sink.add(ResponseState.loading);
   }
 
   void init(){
-    print('get data');
     getData();
   }
 

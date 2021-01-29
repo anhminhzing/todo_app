@@ -29,21 +29,39 @@ class _CardItemState extends State<CardItem> {
       child:  Container(
           margin: const EdgeInsets.only(top: 20),
           padding: const EdgeInsets.all(10),
-          color: Colors.white,
           width: double.infinity,
-          height: 100,
+          decoration: BoxDecoration(
+            color: Color(0xFF242A37),
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.2),
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: Offset(0, 1), // changes position of shadow
+              ),
+            ],
+          ),
+          height: 120,
           child:Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 widget.title,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                ),
               ),
               SizedBox(height: 10,),
               Text(
                 widget.description,
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                    color: Colors.white,
+                    // fontSize: 14,
+                ),
               )
             ],
           )
