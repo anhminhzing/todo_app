@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_app/todo_app/data.dart';
 import 'package:rxdart/rxdart.dart' show BehaviorSubject;
@@ -11,8 +10,8 @@ enum ResponseState {
 
 class ToDoBloc {
   // ignore: close_sinks
-  final BehaviorSubject<ResponseState> listItemController = BehaviorSubject<
-      ResponseState>();
+  final BehaviorSubject<ResponseState> listItemController =
+      BehaviorSubject<ResponseState>();
 
   Stream<ResponseState> get getListItemController =>
       this.listItemController.stream;
@@ -28,12 +27,12 @@ class ToDoBloc {
     listItemController.sink.add(ResponseState.done);
   }
 
-  void setList(){
+  void setList() {
     listItemController.sink.add(ResponseState.loading);
     listItemController.sink.add(ResponseState.done);
   }
 
-  void init(){
+  void init() {
     getData();
   }
 

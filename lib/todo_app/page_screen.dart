@@ -137,46 +137,54 @@ class _PageScreenState extends State<PageScreen> {
                       ),
                       Column(
                         children: List.generate(listTask.length, (index) {
-                          return Container(
-                            margin: const EdgeInsets.only(bottom: 20),
-                            decoration: BoxDecoration(
-                              color: Color(0xFF242A37),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10)),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.2),
-                                  spreadRadius: 5,
-                                  blurRadius: 7,
-                                  offset: Offset(
-                                      0, 1), // changes position of shadow
-                                ),
-                              ],
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Checkbox(
-                                  activeColor: Colors.green,
-                                  checkColor: Colors.white,
-                                  value: listTask[index].isDone,
-                                  onChanged: (newValue) {
-                                    setState(() {
-                                      listTask[index].isDone =
-                                          !listTask[index].isDone;
-                                    });
-                                  },
-                                ),
-                                Expanded(
-                                  child: Text(
-                                    listTask[index].task,
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 14,
-                                    ),
+                          return GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                listTask[index].isDone =
+                                    !listTask[index].isDone;
+                              });
+                            },
+                            child: Container(
+                              margin: const EdgeInsets.only(bottom: 20),
+                              decoration: BoxDecoration(
+                                color: Color(0xFF242A37),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10)),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.2),
+                                    spreadRadius: 5,
+                                    blurRadius: 7,
+                                    offset: Offset(
+                                        0, 1), // changes position of shadow
                                   ),
-                                )
-                              ],
+                                ],
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Checkbox(
+                                    activeColor: Colors.green,
+                                    checkColor: Colors.white,
+                                    value: listTask[index].isDone,
+                                    onChanged: (newValue) {
+                                      setState(() {
+                                        listTask[index].isDone =
+                                            !listTask[index].isDone;
+                                      });
+                                    },
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                      listTask[index].task,
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
                           );
                         }).toList(),

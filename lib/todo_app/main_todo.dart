@@ -20,6 +20,12 @@ class _ToDoAppState extends State<ToDoApp> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    blocController?.dispose();
+    super.dispose();
+  }
+
   void addNewItem() {
     ToDoItem newItem = ToDoItem(
         title: titleController.text.trim() == ''
