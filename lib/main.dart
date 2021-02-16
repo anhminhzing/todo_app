@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/todo_app/main_todo.dart';
-
+import 'package:flutter_app/screens/listUsers_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -16,8 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: ToDoApp(),
+      home: ListUser(),
     );
   }
 }
-
