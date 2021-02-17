@@ -1,15 +1,24 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/bloc/theme_bloc.dart';
 import 'package:flutter_app/bloc/user_bloc.dart';
 import 'package:flutter_app/data/user_data.dart';
 
 class ListUser extends StatefulWidget {
+  final VoidCallback changeTheme;
+  ListUser({
+    Key key,
+    this.changeTheme,
+  }) : super(key: key);
+
   @override
   _ListUserState createState() => _ListUserState();
 }
 
 class _ListUserState extends State<ListUser> {
   UserBloc userBloc;
+  ThemeBloc _bloc;
+  bool isLight = true;
 
   TextStyle get basicTextStyle => TextStyle(
         color: Colors.white,
@@ -18,13 +27,14 @@ class _ListUserState extends State<ListUser> {
 
   @override
   void initState() {
-    userBloc = UserBloc()..init();
+    userBloc = UserBloc()..getData();
     super.initState();
   }
 
   @override
   void dispose() {
     userBloc.dispose();
+    _bloc?.dispose();
     super.dispose();
   }
 
@@ -33,33 +43,32 @@ class _ListUserState extends State<ListUser> {
     return Scaffold(
       appBar: AppBar(
         title: Text('List User'),
+        automaticallyImplyLeading: false,
+        backgroundColor: Theme.of(context).primaryColor,
+        actions: [
+          Switch(
+            value: isLight,
+            onChanged: (value) {
+              setState(() {
+                isLight = value;
+              });
+              widget.changeTheme();
+            },
+          )
+        ],
       ),
       body: Stack(
         children: [
-          Container(
-            color: Colors.black87,
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-          ),
-          SafeArea(
-            child: SingleChildScrollView(
-                child: StreamBuilder<Result>(
+          SingleChildScrollView(
+            child: StreamBuilder<Result>(
               stream: userBloc.userBlocStream,
               builder: (BuildContext builder, AsyncSnapshot snapshot) {
                 if (snapshot.hasData) {
-                  print(snapshot.data.results[0].picture.thumbnail);
                   return Column(
                     children: (snapshot.data.results as List).map((e) {
                       return Container(
-                        margin: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 10,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
                         child: ListTile(
+                          onTap: () {},
                           leading: _buildAvatar(e.picture.large),
                           title: _buildTitle(
                             e.name.first,
@@ -81,8 +90,8 @@ class _ListUserState extends State<ListUser> {
                 }
                 return Text('Loading');
               },
-            )),
-          )
+            ),
+          ),
         ],
       ),
     );
