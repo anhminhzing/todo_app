@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/bloc/theme_bloc.dart';
 import 'package:flutter_app/bloc/user_bloc.dart';
 import 'package:flutter_app/data/user_data.dart';
+import 'package:flutter_app/screens/detailUser_screen.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class ListUser extends StatefulWidget {
   final VoidCallback changeTheme;
@@ -38,6 +40,24 @@ class _ListUserState extends State<ListUser> {
     super.dispose();
   }
 
+  void _openAddEntryDialog(Response user) {
+    // Navigator.of(context).push(
+    //   MaterialPageRoute(
+    //     builder: (BuildContext context) {
+    //       return DetailScreen(user: user);
+    //     },
+    //     fullscreenDialog: true,
+    //   ),
+    // );
+
+    showBarModalBottomSheet(
+      expand: true,
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (context) => DetailScreen(user: user),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,7 +88,7 @@ class _ListUserState extends State<ListUser> {
                     children: (snapshot.data.results as List).map((e) {
                       return Container(
                         child: ListTile(
-                          onTap: () {},
+                          onTap: () => _openAddEntryDialog(e),
                           leading: _buildAvatar(e.picture.large),
                           title: _buildTitle(
                             e.name.first,

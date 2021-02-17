@@ -31,6 +31,9 @@ dependencies:
   rxdart: ^0.25.0
   http: ^0.12.2
   cached_network_image: ^2.5.0
+  modal_bottom_sheet: ^1.0.0+1
+  font_awesome_flutter: ^8.11.0
+  google_maps_flutter: ^1.2.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -39,7 +39,7 @@ class DataTheme {
     primaryColor: Colors.black,
     primaryColorLight: Colors.lightBlue,
     primaryColorDark: Colors.white,
-    accentColor: Colors.green,
+    accentColor: Colors.orange,
     accentColorBrightness: Brightness.dark,
     scaffoldBackgroundColor: Colors.black,
     bottomAppBarColor: Colors.black,
