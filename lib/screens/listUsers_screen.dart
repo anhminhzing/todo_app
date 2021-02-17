@@ -59,12 +59,12 @@ class _ListUserState extends State<ListUser> {
       ),
       body: Stack(
         children: [
-          SingleChildScrollView(
-            child: StreamBuilder<Result>(
-              stream: userBloc.userBlocStream,
-              builder: (BuildContext builder, AsyncSnapshot snapshot) {
-                if (snapshot.hasData) {
-                  return Column(
+          StreamBuilder<Result>(
+            stream: userBloc.userBlocStream,
+            builder: (BuildContext builder, AsyncSnapshot snapshot) {
+              if (snapshot.hasData) {
+                return SingleChildScrollView(
+                  child: Column(
                     children: (snapshot.data.results as List).map((e) {
                       return Container(
                         child: ListTile(
@@ -82,15 +82,17 @@ class _ListUserState extends State<ListUser> {
                         ),
                       );
                     }).toList(),
-                  );
-                } else if (snapshot.hasError) {
-                  return Container(
-                    child: Text('Error'),
-                  );
-                }
-                return Text('Loading');
-              },
-            ),
+                  ),
+                );
+              } else if (snapshot.hasError) {
+                return Container(
+                  child: Text('Error'),
+                );
+              }
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            },
           ),
         ],
       ),
